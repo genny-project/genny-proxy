@@ -15,11 +15,11 @@ import org.xml.sax.SAXException;
 
 public class AbnLookup {
 
-  private static final String UTF_8 = "UTF-8";
-  private static final String callbackName = "c";
-  private static final String abnKey = System.getenv("ABN_KEY");
+  static final String UTF_8 = "UTF-8";
+  static final String callbackName = "c";
+  static final String abnKey = System.getenv("ABN_KEY");
 
-  private static String getCallbackJson(String callbackResult) {
+  static String getCallbackJson(String callbackResult) {
     String jsonRes = callbackResult.substring(callbackName.length() + 1, callbackResult.length() - 1);
     return jsonRes;
   }
@@ -42,7 +42,7 @@ public class AbnLookup {
     return results;
   }
 
-  private static AbnSearchResult doRequest(String service, String parameters)
+  static AbnSearchResult doRequest(String service, String parameters)
       throws URISyntaxException, IOException, SAXException, ParserConfigurationException, FactoryConfigurationError {
     AbnSearchResult res = null;
 

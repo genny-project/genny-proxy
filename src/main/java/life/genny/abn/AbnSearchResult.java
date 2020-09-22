@@ -8,21 +8,21 @@ public class AbnSearchResult {
   @JsonbProperty("Message")
   String message;
 
-  public void setMessage(String message) {
-    this.message = message;
-  }
-
-  public void setNames(List<CompanyInfo> names) {
-    this.names = names;
-  }
-
   @JsonbProperty("Names")
   List<CompanyInfo> names;
 
   public AbnSearchResult() {}
 
+  public void setMessage(String message) {
+    this.message = message;
+  }
+
   public String getMessage() {
     return message;
+  }
+
+  public void setNames(List<CompanyInfo> names) {
+    this.names = names;
   }
 
   public List<CompanyInfo> getNames() {
@@ -33,6 +33,7 @@ public class AbnSearchResult {
   public String toString() {
     return "AbnSearchResult [message=" + message + ", names=" + names + "]";
   }
+
 }
 
 
