@@ -14,10 +14,10 @@
 		<maven.compiler.target>11</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<quarkus-plugin.version>1.8.1.Final</quarkus-plugin.version>
+		<quarkus-plugin.version>1.10.3.Final</quarkus-plugin.version>
 		<quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
 		<quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-		<quarkus.platform.version>1.8.1.Final</quarkus.platform.version>
+		<quarkus.platform.version>1.10.3.Final</quarkus.platform.version>
 		<surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
 	</properties>
 	<dependencyManagement>
@@ -237,9 +237,7 @@
 
 								<!-- if no tag was found "near" this commit, just print the commit's
 									id instead, helpful when you always expect this field to be not-empty -->
-								<always>false</always>
-								<!-- how many chars should be displayed as the commit object id?
-									7 is git's default, 0 has a special meaning (see end of this README.md),
+								<always>false</always> <!-- how many chars should be displayed as the commit object id?  7 is git's default, 0 has a special meaning (see end of this README.md),
 									and 40 is the maximum value here -->
 								<abbrev>7</abbrev>
 
