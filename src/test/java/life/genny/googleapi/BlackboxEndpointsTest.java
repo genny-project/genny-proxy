@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.*;
-
+import static org.junit.jupiter.api.Assertions.*;
+;
 @QuarkusTest
 public class BlackboxEndpointsTest {
 
@@ -21,6 +22,26 @@ public class BlackboxEndpointsTest {
              .body(
                containsString("google.maps.Load = function(apiLoad)")
              );
+    }
+
+    @Test
+    public void getGoogleTimeZoneApi_passValidParameter_return200() {
+
+        String response =  given()
+                .log().all()
+                .when()
+                .param("location", "-37.913151,145.262253")
+                .param("timestamp", 1458000000)
+                .get("/googleapi/v1/timezone")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .extract()
+                .body()
+                .asString();
+         assertEquals("Australia/Melbourne",response);
+
+
     }
 
 }

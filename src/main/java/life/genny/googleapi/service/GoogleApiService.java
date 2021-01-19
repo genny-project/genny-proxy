@@ -1,13 +1,11 @@
 package life.genny.googleapi.service;
 
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.time.Duration;
 
-import io.vertx.ext.web.client.WebClientOptions;
-import io.vertx.mutiny.core.Vertx;
+
 import io.vertx.mutiny.ext.web.client.WebClient;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -15,40 +13,35 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 @ApplicationScoped
 public class GoogleApiService {
 
+    @ConfigProperty(name = "quarkus.google.api.map.path")
+    private String mapPath;
+
+    @ConfigProperty(name = "quarkus.google.api.timezone.path")
+    private String timezonePath;
+
     @Inject
-    Vertx vertx;
-
-    private WebClient client;
-
-
-    @ConfigProperty(name = "quarkus.google.api.path")
-    private String path;
-
-    @ConfigProperty(name = "quarkus.google.api.port")
-    private int port;
-
-    @ConfigProperty(name = "quarkus.google.api.host")
-    private String host;
-
-    @PostConstruct
-    void init() {
-        this.client = WebClient.create(vertx,
-                new WebClientOptions()
-                        .setDefaultHost(host)
-                        .setDefaultPort(port)
-                        .setSsl(true)
-                        .setLogActivity(true)
-                        .setTrustAll(true));
-    }
+    private WebClient webClient;
 
     public String retrieveGoogleMapApi(String apiKey) {
 
-        return client.get(path)
-                .setQueryParam("key",apiKey)
+        return webClient.get(mapPath)
+                .setQueryParam("key", apiKey)
                 .setQueryParam("libraries","places,drawing")
                 .send()
                 .await()
                 .atMost(Duration.ofSeconds(15))
                 .bodyAsString();
+    }
+
+    public TimezoneResp retrieveGoogleTimeZoneApi(String location, long timestamp, String apiKey) {
+
+        return webClient.get(timezonePath)
+                .setQueryParam("key", apiKey)
+                .setQueryParam("location", location)
+                .setQueryParam("timestamp", String.valueOf(timestamp))
+                .send()
+                .await()
+                .atMost(Duration.ofSeconds(15))
+                .bodyAsJson(TimezoneResp.class);
     }
 }
