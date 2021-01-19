@@ -26,7 +26,7 @@ public class BlackboxEndpointsTest {
 
     @Test
     public void getGoogleTimeZoneApi_passValidParameter_return200() {
-
+        //http://localhost:8081/googleapi/v1/timezone?location=-37.913151%2C145.262253&timestamp=1458000000
         String response =  given()
                 .log().all()
                 .when()
