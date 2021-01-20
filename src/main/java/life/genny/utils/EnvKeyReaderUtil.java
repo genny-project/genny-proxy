@@ -32,10 +32,10 @@ public class EnvKeyReaderUtil {
         return StringUtil.EMPTY_STRING;
     };
 
-    public static String retrieveKey(String envName){
+    public static String retrieveKey(String envName, String defaultFileName){
         return Optional.ofNullable(System.getenv(envName))
                 .filter(Objects::nonNull)
                 .filter(isNotEmpty)
-                .orElse(readKeyFromFileSystem.apply(envName));
+                .orElse(readKeyFromFileSystem.apply(defaultFileName));
     }
 }
