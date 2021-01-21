@@ -6,6 +6,7 @@ import life.genny.googleapi.service.GoogleApiService;
 import life.genny.googleapi.service.TimezoneResp;
 import life.genny.models.GennyToken;
 import life.genny.utils.EnvKeyReaderUtil;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.resteasy.annotations.cache.NoCache;
 import org.jboss.resteasy.annotations.jaxrs.QueryParam;
@@ -29,6 +30,7 @@ public class GoogleApiResource {
 
   @Inject
   private JsonWebToken accessToken;
+
 
   @GET
   @Path("v1/map")
