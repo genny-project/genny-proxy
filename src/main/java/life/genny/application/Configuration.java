@@ -1,4 +1,4 @@
-package life.genny.googleapi.application;
+package life.genny.application;
 
 import io.vertx.mutiny.core.Vertx;
 import org.eclipse.microprofile.config.inject.ConfigProperty;

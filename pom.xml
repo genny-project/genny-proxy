@@ -82,6 +82,12 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-vault</artifactId>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/commons-lang/commons-lang -->
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.2</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>

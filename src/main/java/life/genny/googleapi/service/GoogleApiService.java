@@ -7,6 +7,8 @@ import java.time.Duration;
 
 
 import io.vertx.mutiny.ext.web.client.WebClient;
+import life.genny.googleapi.model.address.Addresses;
+import life.genny.googleapi.model.timezone.TimezoneResp;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 
@@ -19,6 +21,8 @@ public class GoogleApiService {
     @ConfigProperty(name = "quarkus.google.api.timezone.path")
     private String timezonePath;
 
+    @ConfigProperty(name = "quarkus.google.api.address.path")
+    private String addressPath;
     @Inject
     private WebClient webClient;
 
@@ -34,7 +38,7 @@ public class GoogleApiService {
     }
 
     public TimezoneResp retrieveGoogleTimeZoneApi(String location, long timestamp, String apiKey) {
-
+        //639%20lonsdale%20st
         return webClient.get(timezonePath)
                 .setQueryParam("key", apiKey)
                 .setQueryParam("location", location)
@@ -43,5 +47,18 @@ public class GoogleApiService {
                 .await()
                 .atMost(Duration.ofSeconds(15))
                 .bodyAsJson(TimezoneResp.class);
+    }
+
+
+    public Addresses retrieveGoogleAddressApi(String address, String apiKey){
+
+        return webClient.get(addressPath)
+                .setQueryParam("key", apiKey)
+                .setQueryParam("address", address)
+                .send()
+                .await()
+                .atMost(Duration.ofSeconds(15))
+                .bodyAsJson(Addresses.class);
+
     }
 }

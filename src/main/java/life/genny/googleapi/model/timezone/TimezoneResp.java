@@ -1,4 +1,4 @@
-package life.genny.googleapi.service;
+package life.genny.googleapi.model.timezone;
 
 public class TimezoneResp {
 
