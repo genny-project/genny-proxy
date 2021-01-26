@@ -1,4 +1,4 @@
-package life.genny.googleapi.service;
+package life.genny.gennyproxy.service;
 
 
 import javax.enterprise.context.ApplicationScoped;
@@ -7,8 +7,9 @@ import java.time.Duration;
 
 
 import io.vertx.mutiny.ext.web.client.WebClient;
-import life.genny.googleapi.model.address.Addresses;
-import life.genny.googleapi.model.timezone.TimezoneResp;
+import life.genny.gennyproxy.application.ApiKeyRetriever;
+import life.genny.gennyproxy.model.address.Addresses;
+import life.genny.gennyproxy.model.timezone.TimezoneResp;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 
@@ -23,10 +24,15 @@ public class GoogleApiService {
 
     @ConfigProperty(name = "quarkus.google.api.address.path")
     private String addressPath;
+
     @Inject
     private WebClient webClient;
 
-    public String retrieveGoogleMapApi(String apiKey) {
+    @Inject
+    private ApiKeyRetriever apiKeyRetriever;
+
+    public String retrieveGoogleMapApi( ) {
+        String apiKey = apiKeyRetriever.retrieveApiKey("ENV_GOOGLE_MAPS_APIKEY_", "ENV_GOOGLE_MAPS_APIKEY_DEFAULT");
 
         return webClient.get(mapPath)
                 .setQueryParam("key", apiKey)
@@ -37,8 +43,10 @@ public class GoogleApiService {
                 .bodyAsString();
     }
 
-    public TimezoneResp retrieveGoogleTimeZoneApi(String location, long timestamp, String apiKey) {
+    public TimezoneResp retrieveGoogleTimeZoneApi(String location, long timestamp) {
         //639%20lonsdale%20st
+        String apiKey = apiKeyRetriever.retrieveApiKey("ENV_GOOGLE_TIMEZONE_APIKEY_", "ENV_GOOGLE_TIMEZONE_APIKEY_DEFAULT");
+
         return webClient.get(timezonePath)
                 .setQueryParam("key", apiKey)
                 .setQueryParam("location", location)
@@ -50,7 +58,9 @@ public class GoogleApiService {
     }
 
 
-    public Addresses retrieveGoogleAddressApi(String address, String apiKey){
+    public Addresses retrieveGoogleAddressApi(String address){
+
+        String apiKey = apiKeyRetriever.retrieveApiKey("ENV_GOOGLE_TIMEZONE_APIKEY_", "ENV_GOOGLE_TIMEZONE_APIKEY_DEFAULT");
 
         return webClient.get(addressPath)
                 .setQueryParam("key", apiKey)

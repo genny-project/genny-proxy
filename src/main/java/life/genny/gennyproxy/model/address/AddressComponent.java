@@ -1,5 +1,5 @@
 
-package life.genny.googleapi.model.address;
+package life.genny.gennyproxy.model.address;
 
 import java.io.Serializable;
 import java.util.List;

@@ -1,24 +1,44 @@
-package life.genny.abn;
+package life.genny.gennyproxy.model.abn;
 
-import javax.json.bind.annotation.JsonbProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-public class CompanyInfo {
+import java.io.Serializable;
 
-  @JsonbProperty("Abn")
+public class CompanyInfo implements Serializable {
+
+  @JsonProperty("Abn")
+  @SerializedName("Abn")
+  @Expose
   String abn;
-  @JsonbProperty("AbnStatus")
+  @JsonProperty("AbnStatus")
+  @SerializedName("AbnStatus")
+  @Expose
   String abnStatus;
-  @JsonbProperty("IsCurrent")
+  @JsonProperty("IsCurrent")
+  @SerializedName("IsCurrent")
+  @Expose
   boolean isCurrent;
-  @JsonbProperty("Name")
+  @JsonProperty("Name")
+  @SerializedName("Name")
+  @Expose
   String name;
-  @JsonbProperty("NameType")
+  @JsonProperty("nameType")
+  @SerializedName("nameType")
+  @Expose
   String nameType;
-  @JsonbProperty("Postcode")
+  @JsonProperty("Postcode")
+  @SerializedName("Message")
+  @Expose
   String postcode;
-  @JsonbProperty("Score")
+  @JsonProperty("Score")
+  @SerializedName("Score")
+  @Expose
   String score;
-  @JsonbProperty("State")
+  @JsonProperty("State")
+  @SerializedName("State")
+  @Expose
   String state;
 
   public CompanyInfo() {}

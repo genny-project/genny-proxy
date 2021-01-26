@@ -1,8 +1,9 @@
-package life.genny.utils;
+package life.genny.gennyproxy.application;
 
 import io.netty.util.internal.StringUtil;
 import org.apache.commons.io.FileUtils;
 
+import javax.enterprise.context.ApplicationScoped;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -11,11 +12,8 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class EnvKeyReaderUtil {
-
-    private EnvKeyReaderUtil(){
-        // private constructor makes the util class static
-    }
+@ApplicationScoped
+public class ApiKeyRetriever {
 
     private static final String BASE_DIR ="/tmp/";
 
@@ -32,7 +30,7 @@ public class EnvKeyReaderUtil {
         return StringUtil.EMPTY_STRING;
     };
 
-    public static String retrieveKey(String envName, String defaultFileName){
+    public String retrieveApiKey(String envName, String defaultFileName){
         return Optional.ofNullable(System.getenv(envName))
                 .filter(Objects::nonNull)
                 .filter(isNotEmpty)
