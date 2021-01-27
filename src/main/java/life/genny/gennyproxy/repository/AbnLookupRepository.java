@@ -1,8 +1,6 @@
 package life.genny.gennyproxy.repository;
 
-import com.google.gson.Gson;
 import io.vertx.mutiny.ext.web.client.WebClient;
-import life.genny.gennyproxy.model.abn.AbnSearchResult;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;

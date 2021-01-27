@@ -24,13 +24,10 @@ public class AccessTokenParser {
 
         Arrays
            .asList(validRoles)
-           .forEach( validRole ->{
-                       if(userToken.hasRole(validRole)){
-                          return;
-                       }
-                    });
-
-        throw new WebApplicationException("User not recognised. Entity not being created", Response.Status.FORBIDDEN);
+           .stream()
+           .filter(validRole-> userToken.hasRole(validRole))
+           .findFirst()
+           .orElseThrow(() -> new WebApplicationException("User not recognised. Entity not being created", Response.Status.FORBIDDEN));
 
     }
 

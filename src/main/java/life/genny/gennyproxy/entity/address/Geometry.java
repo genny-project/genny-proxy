@@ -1,5 +1,5 @@
 
-package life.genny.gennyproxy.model.address;
+package life.genny.gennyproxy.entity.address;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.annotations.Expose;

@@ -1,7 +1,7 @@
-package life.genny.googleapi;
+package test.component.life.gennyproxy;
 
 import io.quarkus.test.junit.QuarkusTest;
-import life.genny.gennyproxy.model.abn.AbnSearchResult;
+import life.genny.gennyproxy.entity.abn.AbnSearchResult;
 import life.genny.gennyproxy.service.AbnLookupService;
 import org.junit.jupiter.api.Test;
 

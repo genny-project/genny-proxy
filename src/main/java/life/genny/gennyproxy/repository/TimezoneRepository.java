@@ -1,7 +1,7 @@
 package life.genny.gennyproxy.repository;
 
 import io.vertx.mutiny.ext.web.client.WebClient;
-import life.genny.gennyproxy.model.timezone.TimezoneResp;
+import life.genny.gennyproxy.entity.timezone.GoogleTimezone;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -17,7 +17,7 @@ public class TimezoneRepository {
     @ConfigProperty(name = "quarkus.google.api.timezone.path")
     private String timezonePath;
 
-    public TimezoneResp retrieveGoogleMap(String location, long timestamp, String apiKey){
+    public GoogleTimezone retrieveGoogleMap(String location, long timestamp, String apiKey){
         //639%20lonsdale%20st
 
         return webClient.get(timezonePath)
@@ -27,7 +27,7 @@ public class TimezoneRepository {
                 .send()
                 .await()
                 .atMost(Duration.ofSeconds(15))
-                .bodyAsJson(TimezoneResp.class);
+                .bodyAsJson(GoogleTimezone.class);
     }
 
 

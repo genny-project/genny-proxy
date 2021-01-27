@@ -1,5 +1,5 @@
 
-package life.genny.gennyproxy.model.address;
+package life.genny.gennyproxy.entity.address;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

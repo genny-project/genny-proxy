@@ -1,6 +1,6 @@
-package life.genny.gennyproxy.model.timezone;
+package life.genny.gennyproxy.entity.timezone;
 
-public class TimezoneResp {
+public class GoogleTimezone {
 
     private long dstOffset;
     private long rawOffset;
@@ -8,7 +8,7 @@ public class TimezoneResp {
     private String timeZoneId;
     private String timeZoneName;
 
-    public TimezoneResp() {
+    public GoogleTimezone() {
     }
 
     public long getDstOffset() {

@@ -6,7 +6,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import com.google.gson.Gson;
 import life.genny.gennyproxy.application.IApiKeyRetriever;
-import life.genny.gennyproxy.model.abn.AbnSearchResult;
+import life.genny.gennyproxy.entity.abn.AbnSearchResult;
 import life.genny.gennyproxy.repository.AbnLookupRepository;
 
 @ApplicationScoped
@@ -14,7 +14,8 @@ public class AbnLookupService {
 
 
   @Inject
-  @Named("byEnv") //byInfinispan byEnv
+  @Named("byEnv")
+  //@Named("byInfinispan")
   private IApiKeyRetriever apiKeyRetriever;
 
   @Inject
@@ -27,8 +28,6 @@ public class AbnLookupService {
     String abnKey = apiKeyRetriever.retrieveApiKey("ENV_ABN_SEARCH_APIKEY_", "ENV_ABN_SEARCH_APIKEY_DEFAULT");
 
     String response =  abnLookupRepository.retrieveCompanyAbn(searchedName, pageSize, abnKey);
-
-    System.out.println(response);
 
     return GSON.fromJson(response, AbnSearchResult.class);
 

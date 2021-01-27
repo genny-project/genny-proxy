@@ -1,11 +1,10 @@
 package life.genny.gennyproxy.resource;
 
 import life.genny.gennyproxy.application.AccessTokenParser;
-import life.genny.gennyproxy.model.address.Addresses;
 import life.genny.gennyproxy.service.GoogleApiService;
 import org.jboss.resteasy.annotations.cache.NoCache;
 import org.jboss.resteasy.annotations.jaxrs.QueryParam;
-
+import life.genny.gennyproxy.entity.address.Addresses;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -38,7 +37,7 @@ public class GoogleApiResource {
   @Path("v1/timezone")
   @NoCache
   @Produces(MediaType.APPLICATION_JSON)
-  public Response retrieveGoogleTimeZoneApi(@QueryParam String location, @QueryParam long timestamp ) {
+  public Response retrieveGoogleTimeZoneApi(@QueryParam("location") String location, @QueryParam("timestamp") long timestamp ) {
 
     accessTokenParser.validateRole("user", "superadmin");
 
@@ -51,7 +50,7 @@ public class GoogleApiResource {
   @Path("v1/geocode")
   @NoCache
   @Produces(MediaType.APPLICATION_JSON)
-  public Response retrieveGoogleAddressApi(@QueryParam String address) {
+  public Response retrieveGoogleAddressApi(@QueryParam("address") String address) {
 
     accessTokenParser.validateRole("user", "superadmin");
 
