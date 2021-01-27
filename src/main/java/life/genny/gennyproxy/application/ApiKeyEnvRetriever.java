@@ -4,6 +4,7 @@ import io.netty.util.internal.StringUtil;
 import org.apache.commons.io.FileUtils;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -13,7 +14,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 @ApplicationScoped
-public class ApiKeyRetriever {
+@Named("byEnv")
+public class ApiKeyEnvRetriever implements IApiKeyRetriever {
 
     private static final String BASE_DIR ="/tmp/";
 
@@ -30,10 +32,16 @@ public class ApiKeyRetriever {
         return StringUtil.EMPTY_STRING;
     };
 
-    public String retrieveApiKey(String envName, String defaultFileName){
-        return Optional.ofNullable(System.getenv(envName))
+    @Override
+    public String retrieveApiKey(String name, String defaultName){
+        return Optional.ofNullable(System.getenv(name))
                 .filter(Objects::nonNull)
                 .filter(isNotEmpty)
-                .orElse(readKeyFromFileSystem.apply(defaultFileName));
+                .orElse(readKeyFromFileSystem.apply(defaultName));
+    }
+
+    @Override
+    public String getSource() {
+        return "From File";
     }
 }

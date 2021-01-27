@@ -24,12 +24,12 @@ public class CompanyInfo implements Serializable {
   @SerializedName("Name")
   @Expose
   String name;
-  @JsonProperty("nameType")
-  @SerializedName("nameType")
+  @JsonProperty("NameType")
+  @SerializedName("NameType")
   @Expose
   String nameType;
   @JsonProperty("Postcode")
-  @SerializedName("Message")
+  @SerializedName("Postcode")
   @Expose
   String postcode;
   @JsonProperty("Score")

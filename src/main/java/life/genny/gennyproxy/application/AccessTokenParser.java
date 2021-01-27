@@ -1,8 +1,6 @@
 package life.genny.gennyproxy.application;
 
-import io.netty.util.internal.StringUtil;
 import life.genny.models.GennyToken;
-import org.apache.commons.io.FileUtils;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -17,7 +15,7 @@ public class AccessTokenParser {
     @Inject
     private JsonWebToken accessToken;
 
-    public void validateRole(String... roles){
+    public void validateRole(String... validRoles){
         GennyToken userToken = new GennyToken(accessToken.getRawToken());
 
         String realm = userToken.getRealm();
@@ -25,9 +23,9 @@ public class AccessTokenParser {
         System.out.println("realm detected "+realm +" roles  "+userToken.getUserRoles());
 
         Arrays
-           .asList(roles)
-           .forEach( role ->{
-                       if(userToken.hasRole(role)){
+           .asList(validRoles)
+           .forEach( validRole ->{
+                       if(userToken.hasRole(validRole)){
                           return;
                        }
                     });

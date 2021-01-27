@@ -16,7 +16,8 @@ public class AbnLookupServiceTest {
 
     @Test
     public void retrieveCompanyAbn_passValidParameter_return200() throws  Exception {
-        AbnSearchResult abnSearchResult = abnLookupService.retrieveCompanyAbn("NAB", 20);
+        AbnSearchResult abnSearchResult = abnLookupService.retrieveCompanyAbn("outcome", 20);
         System.out.println(abnSearchResult);
+        System.out.println(abnLookupService.getSource());
     }
 }
