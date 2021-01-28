@@ -1,7 +1,7 @@
 package life.genny.gennyproxy.repository;
 
 import io.vertx.mutiny.ext.web.client.WebClient;
-import life.genny.gennyproxy.entity.timezone.GoogleTimezone;
+import life.genny.gennyproxy.repository.entity.timezone.GoogleTimezone;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;

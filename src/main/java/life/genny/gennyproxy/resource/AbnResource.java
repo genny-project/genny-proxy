@@ -1,7 +1,7 @@
 package life.genny.gennyproxy.resource;
 
 import life.genny.gennyproxy.application.AccessTokenParser;
-import life.genny.gennyproxy.entity.abn.AbnSearchResult;
+import life.genny.gennyproxy.repository.entity.abn.AbnSearchResult;
 import life.genny.gennyproxy.service.AbnLookupService;
 import org.jboss.resteasy.annotations.jaxrs.QueryParam;
 
@@ -29,6 +29,7 @@ public class AbnResource {
     accessTokenParser.validateRole("user", "superadmin");
 
     AbnSearchResult abnSearchResult = abnLookupService.retrieveCompanyAbn(name, size);
+
     return Response.ok(abnSearchResult, MediaType.APPLICATION_JSON).build();
   }
 

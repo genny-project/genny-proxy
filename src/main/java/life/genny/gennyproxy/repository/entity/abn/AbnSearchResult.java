@@ -1,4 +1,4 @@
-package life.genny.gennyproxy.entity.abn;
+package life.genny.gennyproxy.repository.entity.abn;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.Expose;

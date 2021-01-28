@@ -1,5 +1,5 @@
 
-package life.genny.gennyproxy.entity.address;
+package life.genny.gennyproxy.repository.entity.address;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -7,7 +7,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.Serializable;
 
-public class Southwest implements Serializable {
+public class Location implements Serializable {
 
     @SerializedName("lat")
     @Expose

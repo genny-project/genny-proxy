@@ -5,11 +5,15 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import life.genny.gennyproxy.application.IApiKeyRetriever;
-import life.genny.gennyproxy.entity.address.Addresses;
-import life.genny.gennyproxy.entity.timezone.GoogleTimezone;
+import life.genny.gennyproxy.mapper.AddressRespMapper;
+import life.genny.gennyproxy.model.address.AddressResp;
+import life.genny.gennyproxy.repository.entity.address.Addresses;
+import life.genny.gennyproxy.repository.entity.timezone.GoogleTimezone;
 import life.genny.gennyproxy.repository.GoogleAddressRepository;
 import life.genny.gennyproxy.repository.GoogleMapRepository;
 import life.genny.gennyproxy.repository.TimezoneRepository;
+
+import java.util.List;
 
 
 @ApplicationScoped
@@ -23,6 +27,9 @@ public class GoogleApiService {
 
     @Inject
     private GoogleAddressRepository googleAddressRepository;
+
+    @Inject
+    private AddressRespMapper addressRespMapper;
 
     @Inject
     @Named("byEnv")
@@ -45,10 +52,13 @@ public class GoogleApiService {
         return googleTimezone.getTimeZoneId();
     }
 
-    public Addresses retrieveGoogleAddressApi(String address){
+    public List<AddressResp> retrieveGoogleAddressApi(String address){
 
         String apiKey = apiKeyRetriever.retrieveApiKey("ENV_GOOGLE_TIMEZONE_APIKEY_", "ENV_GOOGLE_TIMEZONE_APIKEY_DEFAULT");
 
-        return googleAddressRepository.retrieveGoogleMap(address, apiKey);
+        Addresses addresses = googleAddressRepository.retrieveGoogleMap(address, apiKey);
+
+        return addressRespMapper.map(addresses);
+
     }
 }

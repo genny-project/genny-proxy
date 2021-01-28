@@ -6,7 +6,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import com.google.gson.Gson;
 import life.genny.gennyproxy.application.IApiKeyRetriever;
-import life.genny.gennyproxy.entity.abn.AbnSearchResult;
+import life.genny.gennyproxy.repository.entity.abn.AbnSearchResult;
 import life.genny.gennyproxy.repository.AbnLookupRepository;
 
 @ApplicationScoped

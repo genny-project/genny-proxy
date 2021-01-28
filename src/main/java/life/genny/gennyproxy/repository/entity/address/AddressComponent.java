@@ -1,5 +1,5 @@
 
-package life.genny.gennyproxy.entity.address;
+package life.genny.gennyproxy.repository.entity.address;
 
 import java.io.Serializable;
 import java.util.List;

@@ -1,16 +1,18 @@
 package life.genny.gennyproxy.resource;
 
 import life.genny.gennyproxy.application.AccessTokenParser;
+import life.genny.gennyproxy.model.address.AddressResp;
 import life.genny.gennyproxy.service.GoogleApiService;
 import org.jboss.resteasy.annotations.cache.NoCache;
 import org.jboss.resteasy.annotations.jaxrs.QueryParam;
-import life.genny.gennyproxy.entity.address.Addresses;
+import life.genny.gennyproxy.repository.entity.address.Addresses;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/googleapi")
 public class GoogleApiResource {
@@ -54,7 +56,7 @@ public class GoogleApiResource {
 
     accessTokenParser.validateRole("user", "superadmin");
 
-    Addresses addresses = googleApiService.retrieveGoogleAddressApi(address);
+    List<AddressResp> addresses = googleApiService.retrieveGoogleAddressApi(address);
 
     return Response.ok(addresses, MediaType.APPLICATION_JSON).build();
 

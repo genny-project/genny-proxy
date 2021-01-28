@@ -15,19 +15,19 @@ public class AccessTokenParser {
     @Inject
     private JsonWebToken accessToken;
 
-    public void validateRole(String... validRoles){
+    public void validateRole(String... validRoles) {
         GennyToken userToken = new GennyToken(accessToken.getRawToken());
 
         String realm = userToken.getRealm();
 
-        System.out.println("realm detected "+realm +" roles  "+userToken.getUserRoles());
+        System.out.println("realm detected " + realm + " roles  " + userToken.getUserRoles());
 
         Arrays
-           .asList(validRoles)
-           .stream()
-           .filter(validRole-> userToken.hasRole(validRole))
-           .findFirst()
-           .orElseThrow(() -> new WebApplicationException("User not recognised. Entity not being created", Response.Status.FORBIDDEN));
+                .asList(validRoles)
+                .stream()
+                .filter(validRole -> userToken.hasRole(validRole))
+                .findFirst()
+                .orElseThrow(() -> new WebApplicationException("User not recognised. Entity not being created", Response.Status.FORBIDDEN));
 
     }
 

@@ -1,4 +1,4 @@
-package life.genny.gennyproxy.entity.timezone;
+package life.genny.gennyproxy.repository.entity.timezone;
 
 public class GoogleTimezone {
 
