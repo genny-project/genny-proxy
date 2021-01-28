@@ -36,7 +36,7 @@ public class AddressRespMapper {
 
                 }).collect(Collectors.toList());
     }
-    
+
     private AddressLookUp buildAddressLookUp(Result result) {
 
           Map<String, String> valueMap = result

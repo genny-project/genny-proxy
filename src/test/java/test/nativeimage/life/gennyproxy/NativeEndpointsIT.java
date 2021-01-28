@@ -1,4 +1,4 @@
-package test.nativeiamge.life.gennyproxy;
+package test.nativeimage.life.gennyproxy;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.startsWith;
