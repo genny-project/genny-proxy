@@ -36,25 +36,25 @@ public class GoogleApiService {
     //@Named("byInfinispan")
     private IApiKeyRetriever apiKeyRetriever;
 
-    public String retrieveGoogleMapApi() {
+    public String retrieveGoogleMapApi(String realm) {
 
-        String apiKey = apiKeyRetriever.retrieveApiKey("ENV_GOOGLE_MAPS_APIKEY_", "ENV_GOOGLE_MAPS_APIKEY_DEFAULT");
+        String apiKey = apiKeyRetriever.retrieveApiKey("ENV_GOOGLE_MAPS_APIKEY_"+realm, "ENV_GOOGLE_MAPS_APIKEY_DEFAULT");
 
         return googleMapRepository.retrieveGoogleMap(apiKey);
     }
 
-    public String retrieveGoogleTimeZoneApi(String location, long timestamp) {
+    public String retrieveGoogleTimeZoneApi(String realm, String location, long timestamp) {
 
-        String apiKey = apiKeyRetriever.retrieveApiKey("ENV_GOOGLE_TIMEZONE_APIKEY_", "ENV_GOOGLE_TIMEZONE_APIKEY_DEFAULT");
+        String apiKey = apiKeyRetriever.retrieveApiKey("ENV_GOOGLE_TIMEZONE_APIKEY_"+realm, "ENV_GOOGLE_TIMEZONE_APIKEY_DEFAULT");
 
         GoogleTimezone googleTimezone = timezoneRepository.retrieveGoogleMap(location, timestamp, apiKey);
 
         return googleTimezone.getTimeZoneId();
     }
 
-    public List<AddressResp> retrieveGoogleAddressApi(String address){
+    public List<AddressResp> retrieveGoogleAddressApi(String realm, String address){
 
-        String apiKey = apiKeyRetriever.retrieveApiKey("ENV_GOOGLE_TIMEZONE_APIKEY_", "ENV_GOOGLE_TIMEZONE_APIKEY_DEFAULT");
+        String apiKey = apiKeyRetriever.retrieveApiKey("ENV_GOOGLE_TIMEZONE_APIKEY_"+realm, "ENV_GOOGLE_TIMEZONE_APIKEY_DEFAULT");
 
         Addresses addresses = googleAddressRepository.retrieveGoogleMap(address, apiKey);
 

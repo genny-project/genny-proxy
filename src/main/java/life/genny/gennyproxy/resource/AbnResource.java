@@ -26,9 +26,9 @@ public class AbnResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response retrieveCompanyAbn(@QueryParam("name") String name, @QueryParam("size") int size) throws Exception {
 
-    accessTokenParser.validateRole("user", "superadmin");
+    String realm = accessTokenParser.validateRole("user", "superadmin");
 
-    AbnSearchResult abnSearchResult = abnLookupService.retrieveCompanyAbn(name, size);
+    AbnSearchResult abnSearchResult = abnLookupService.retrieveCompanyAbn(realm, name, size);
 
     return Response.ok(abnSearchResult, MediaType.APPLICATION_JSON).build();
   }

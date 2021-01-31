@@ -23,9 +23,9 @@ public class AbnLookupService {
 
   private static final Gson GSON = new Gson();
 
-  public AbnSearchResult retrieveCompanyAbn(String searchedName, int pageSize) throws UnsupportedEncodingException {
+  public AbnSearchResult retrieveCompanyAbn(String realm, String searchedName, int pageSize) throws UnsupportedEncodingException {
 
-    String abnKey = apiKeyRetriever.retrieveApiKey("ENV_ABN_SEARCH_APIKEY_", "ENV_ABN_SEARCH_APIKEY_DEFAULT");
+    String abnKey = apiKeyRetriever.retrieveApiKey("ENV_ABN_SEARCH_APIKEY_" + realm, "ENV_ABN_SEARCH_APIKEY_DEFAULT");
 
     String response =  abnLookupRepository.retrieveCompanyAbn(searchedName, pageSize, abnKey);
 

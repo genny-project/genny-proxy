@@ -15,7 +15,7 @@ public class AccessTokenParser {
     @Inject
     private JsonWebToken accessToken;
 
-    public void validateRole(String... validRoles) {
+    public String  validateRole(String... validRoles) {
         GennyToken userToken = new GennyToken(accessToken.getRawToken());
 
         String realm = userToken.getRealm();
@@ -29,6 +29,9 @@ public class AccessTokenParser {
                 .findFirst()
                 .orElseThrow(() -> new WebApplicationException("User not recognised. Entity not being created", Response.Status.FORBIDDEN));
 
+
+        return realm;
     }
+
 
 }

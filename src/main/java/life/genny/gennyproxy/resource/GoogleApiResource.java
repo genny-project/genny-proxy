@@ -28,9 +28,9 @@ public class GoogleApiResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response retrieveGoogleMapApi() {
 
-    accessTokenParser.validateRole("user", "superadmin");
+    String realm = accessTokenParser.validateRole("user", "superadmin");
 
-    String respGoogleMapJs = googleApiService.retrieveGoogleMapApi();
+    String respGoogleMapJs = googleApiService.retrieveGoogleMapApi(realm);
 
     return Response.ok(respGoogleMapJs, MediaType.TEXT_PLAIN).build();
   }
@@ -41,9 +41,9 @@ public class GoogleApiResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response retrieveGoogleTimeZoneApi(@QueryParam("location") String location, @QueryParam("timestamp") long timestamp ) {
 
-    accessTokenParser.validateRole("user", "superadmin");
+    String realm = accessTokenParser.validateRole("user", "superadmin");
 
-    String timeZoneId = googleApiService.retrieveGoogleTimeZoneApi(location, timestamp);
+    String timeZoneId = googleApiService.retrieveGoogleTimeZoneApi(realm, location, timestamp);
 
     return Response.ok(timeZoneId, MediaType.TEXT_PLAIN).build();
   }
@@ -54,9 +54,9 @@ public class GoogleApiResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response retrieveGoogleAddressApi(@QueryParam("address") String address) {
 
-    accessTokenParser.validateRole("user", "superadmin");
+    String realm = accessTokenParser.validateRole("user", "superadmin");
 
-    List<AddressResp> addresses = googleApiService.retrieveGoogleAddressApi(address);
+    List<AddressResp> addresses = googleApiService.retrieveGoogleAddressApi(realm, address);
 
     return Response.ok(addresses, MediaType.APPLICATION_JSON).build();
 
