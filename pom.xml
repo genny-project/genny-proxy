@@ -115,10 +115,10 @@
       <version>0.10.7</version>
       <scope>runtime</scope>
     </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-vault</artifactId>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>io.quarkus</groupId>-->
+<!--      <artifactId>quarkus-vault</artifactId>-->
+<!--    </dependency>-->
     <!-- https://mvnrepository.com/artifact/commons-lang/commons-lang -->
     <dependency>
       <groupId>commons-lang</groupId>
