@@ -8,14 +8,12 @@ import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.util.Arrays;
-import io.quarkus.oidc.IdToken;
 
 
 @ApplicationScoped
 public class AccessTokenParser {
 
     @Inject
-    @IdToken
     private JsonWebToken accessToken;
 
     public String  validateRole(String... validRoles) {

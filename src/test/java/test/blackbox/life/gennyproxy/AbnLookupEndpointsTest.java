@@ -4,6 +4,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.either;
 
 
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
@@ -20,21 +21,43 @@ public class AbnLookupEndpointsTest {
 
     @BeforeAll
     public static void beforeALL() throws IOException {
+//        String response =  given()
+//                .contentType(ContentType.URLENC)
+//                .port(8180)
+//                .log().all()
+//                .when()
+//                .body("username=alice&password=alice&grant_type=password&client_id=backend-service&client_secret=secret&scope=openid")
+//                .header("content-type", "application/x-www-form-urlencoded")
+//                .post("/auth/realms/internmatch/protocol/openid-connect/token")
+//                .then()
+//                .log().all()
+//                .statusCode(200)
+//                .extract()
+//                .body()
+//                .asString();
+//
+//
+//        JSONObject json = new JSONObject(response);
+//        System.out.println(json.get("access_token"));
+//        accessToken = (String)json.get("access_token");
+
+        RestAssured.baseURI ="https://keycloak-office.gada.io";
+
         String response =  given()
                 .contentType(ContentType.URLENC)
-                .port(8180)
+                //  .baseUri("keycloak-office.gada.io")
+                // .port(443)
                 .log().all()
                 .when()
-                .body("username=alice&password=alice&grant_type=password&client_id=backend-service&client_secret=secret&scope=openid")
+                .body("username=alice&password=alice&grant_type=password&client_id=internmatch&client_secret=3f6e7dd1-743b-4253-92b0-daf1cfec2a04&scope=openid")
                 .header("content-type", "application/x-www-form-urlencoded")
-                .post("/auth/realms/internmatch/protocol/openid-connect/token")
+                .post("/auth/realms/internmatch_test/protocol/openid-connect/token")
                 .then()
                 .log().all()
                 .statusCode(200)
                 .extract()
                 .body()
                 .asString();
-
 
         JSONObject json = new JSONObject(response);
         System.out.println(json.get("access_token"));
