@@ -31,7 +31,7 @@ public class AccessTokenParser {
                 .orElseThrow(() -> new WebApplicationException("User not recognised. Entity not being created", Response.Status.FORBIDDEN));
 
 
-        return realm;
+        return realm.toUpperCase();
     }
 
 
