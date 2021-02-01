@@ -1,12 +1,14 @@
-package life.genny.abn;
+package test.nativeimage.life.gennyproxy;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.startsWith;
+
+import test.blackbox.life.gennyproxy.AbnLookupEndpointsTest;
 import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.NativeImageTest;
 
 @NativeImageTest
-public class NativeEndpointsIT extends EndpointsTest {
+public class NativeEndpointsIT extends AbnLookupEndpointsTest {
   @Test
   public void testHelloEndpoint() {
       given()
