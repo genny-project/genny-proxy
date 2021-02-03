@@ -48,7 +48,6 @@ public class GoogleApiEndpointsTest {
                 .param("client_id", clientId.get())
                 .param("client_secret", secret.get())
                 .when()
-                //.body("username=test1234@gmail.com&password=alice&grant_type=password&client_id=internmatch&client_secret=dc7d0960-2e1d-4a78-9eef-77678066dbd3&scope=openid")
                 .header("content-type", "application/x-www-form-urlencoded")
                 .post(keycloakUrl.get()+ "/protocol/openid-connect/token")
                 .then()
