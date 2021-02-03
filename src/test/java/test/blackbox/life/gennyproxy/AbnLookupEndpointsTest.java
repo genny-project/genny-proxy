@@ -6,11 +6,13 @@ import static org.hamcrest.Matchers.either;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import io.quarkus.test.junit.QuarkusTest;;import java.io.IOException;
-import java.util.LinkedList;
+import io.quarkus.test.junit.QuarkusTest;
+import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.startsWith;
 
@@ -19,39 +21,34 @@ public class AbnLookupEndpointsTest {
 
     private static String accessToken;
 
-    @BeforeAll
-    public static void beforeALL() throws IOException {
-//        String response =  given()
-//                .contentType(ContentType.URLENC)
-//                .port(8180)
-//                .log().all()
-//                .when()
-//                .body("username=alice&password=alice&grant_type=password&client_id=backend-service&client_secret=secret&scope=openid")
-//                .header("content-type", "application/x-www-form-urlencoded")
-//                .post("/auth/realms/internmatch/protocol/openid-connect/token")
-//                .then()
-//                .log().all()
-//                .statusCode(200)
-//                .extract()
-//                .body()
-//                .asString();
-//
-//
-//        JSONObject json = new JSONObject(response);
-//        System.out.println(json.get("access_token"));
-//        accessToken = (String)json.get("access_token");
+    @ConfigProperty(name = "quarkus.oidc.auth-server-url")
+    Optional<String> keycloakUrl;
 
-        RestAssured.baseURI ="https://keycloak-office.gada.io";
+    @ConfigProperty(name = "quarkus.oidc.client-id")
+    Optional<String> clientId;
 
+    @ConfigProperty(name = "quarkus.oidc.credentials.secret")
+    Optional<String> secret;
+
+    static {
+        RestAssured.useRelaxedHTTPSValidation();
+    }
+
+    @BeforeEach
+    public void beforeALL() {
+
+       // RestAssured.baseURI ="https://keycloak.gada.io";
+        RestAssured.port = -1;
         String response =  given()
-                .contentType(ContentType.URLENC)
-                //  .baseUri("keycloak-office.gada.io")
-                // .port(443)
                 .log().all()
+                .param("grant_type", "password")
+                .param("username", "test1234@gmail.com")
+                .param("password", "alice")
+                .param("client_id", clientId.get())
+                .param("client_secret", secret.get())
                 .when()
-                .body("username=alice&password=alice&grant_type=password&client_id=internmatch&client_secret=3f6e7dd1-743b-4253-92b0-daf1cfec2a04&scope=openid")
                 .header("content-type", "application/x-www-form-urlencoded")
-                .post("/auth/realms/internmatch_test/protocol/openid-connect/token")
+                .post(keycloakUrl.get()+ "/protocol/openid-connect/token")
                 .then()
                 .log().all()
                 .statusCode(200)
@@ -62,7 +59,6 @@ public class AbnLookupEndpointsTest {
         JSONObject json = new JSONObject(response);
         System.out.println(json.get("access_token"));
         accessToken = (String)json.get("access_token");
-
     }
 
 
@@ -80,10 +76,10 @@ public class AbnLookupEndpointsTest {
 //             );
 
 
-          given()
+          given().auth().oauth2(accessToken)
                 .log().all()
                 .when()
-                .header("Authorization","Bearer "+accessToken )
+                  .port(8081)
                 .get("/json?name=gada&size=1")
                 .then()
                 .log().all()
