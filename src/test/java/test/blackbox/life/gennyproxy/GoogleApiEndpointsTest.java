@@ -3,12 +3,15 @@ package test.blackbox.life.gennyproxy;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
 import java.io.IOException;
+import java.util.Optional;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.*;
@@ -19,20 +22,35 @@ public class GoogleApiEndpointsTest {
 
     private static String accessToken;
 
-    @BeforeAll
-    public static void beforeAll() throws IOException {
+    @ConfigProperty(name = "quarkus.oidc.auth-server-url")
+    Optional<String> keycloakUrl;
 
-        RestAssured.baseURI ="https://keycloak-office.gada.io";
+    @ConfigProperty(name = "quarkus.oidc.client-id")
+    Optional<String> clientId;
 
+    @ConfigProperty(name = "quarkus.oidc.credentials.secret")
+    Optional<String> secret;
+
+    static {
+        RestAssured.useRelaxedHTTPSValidation();
+    }
+
+    @BeforeEach
+    public void beforeALL() {
+
+        // RestAssured.baseURI ="https://keycloak.gada.io";
+        RestAssured.port = -1;
         String response =  given()
-                .contentType(ContentType.URLENC)
-              //  .baseUri("keycloak-office.gada.io")
-               // .port(443)
                 .log().all()
+                .param("grant_type", "password")
+                .param("username", "test1234@gmail.com")
+                .param("password", "alice")
+                .param("client_id", clientId.get())
+                .param("client_secret", secret.get())
                 .when()
-                .body("username=alice&password=alice&grant_type=password&client_id=internmatch&client_secret=3f6e7dd1-743b-4253-92b0-daf1cfec2a04&scope=openid")
+                //.body("username=test1234@gmail.com&password=alice&grant_type=password&client_id=internmatch&client_secret=dc7d0960-2e1d-4a78-9eef-77678066dbd3&scope=openid")
                 .header("content-type", "application/x-www-form-urlencoded")
-                .post("/auth/realms/internmatch_test/protocol/openid-connect/token")
+                .post(keycloakUrl.get()+ "/protocol/openid-connect/token")
                 .then()
                 .log().all()
                 .statusCode(200)
@@ -43,16 +61,15 @@ public class GoogleApiEndpointsTest {
         JSONObject json = new JSONObject(response);
         System.out.println(json.get("access_token"));
         accessToken = (String)json.get("access_token");
-
     }
 
     @Test
     public void retrieveGoogleMapApi_passNoParameter_return200() {
         //https://maps.googleapis.com/maps/api/js?key=XXXXX&libraries=places,drawing
-        given()
+        given().auth().oauth2(accessToken)
           .log().all()
           .when()
-                .header("Authorization","Bearer "+accessToken )
+                .port(8081)
                 .get("/googleapi/v1/map")
           .then()
                 .log().all()
@@ -65,10 +82,9 @@ public class GoogleApiEndpointsTest {
     @Test
     public void retrieveGoogleTimeZoneApi_passValidParameter_return200() {
         //http://localhost:8081/googleapi/v1/timezone?location=-37.913151%2C145.262253&timestamp=1458000000
-        String response =  given()
+        String response =  given().auth().oauth2(accessToken)
                 .log().all()
-                .when()
-                .header("Authorization","Bearer "+accessToken )
+                .when() .port(8081)
                 .param("location", "-37.913151,145.262253")
                 .param("timestamp", 1458000000)
                 .get("/googleapi/v1/timezone")
@@ -86,10 +102,10 @@ public class GoogleApiEndpointsTest {
     @Test
     public void retrieveGoogleAddressApi_passValidParameter_return200() {
          String response =  given()
-                .log().all()
+                .log().all().auth().oauth2(accessToken)
                 .when()
-                .header("Authorization","Bearer "+accessToken )
-                .param("address", "14 Durham Place, Clayton South")
+                 .port(8081)
+                 .param("address", "14 Durham Place, Clayton South")
                 .get("/googleapi/v1/geocode")
                 .then()
                 .log().all()
