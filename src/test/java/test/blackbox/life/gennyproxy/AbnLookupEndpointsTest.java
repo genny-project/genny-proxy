@@ -30,6 +30,12 @@ public class AbnLookupEndpointsTest {
     @ConfigProperty(name = "quarkus.oidc.credentials.secret")
     Optional<String> secret;
 
+    @ConfigProperty(name = "quarkus.access.username")
+    Optional<String> username;
+
+    @ConfigProperty(name = "quarkus.access.password")
+    Optional<String> password;
+
     static {
         RestAssured.useRelaxedHTTPSValidation();
     }
@@ -42,8 +48,8 @@ public class AbnLookupEndpointsTest {
         String response =  given()
                 .log().all()
                 .param("grant_type", "password")
-                .param("username", "test1234@gmail.com")
-                .param("password", "alice")
+                .param("username", username.get())
+                .param("password", password.get())
                 .param("client_id", clientId.get())
                 .param("client_secret", secret.get())
                 .when()
