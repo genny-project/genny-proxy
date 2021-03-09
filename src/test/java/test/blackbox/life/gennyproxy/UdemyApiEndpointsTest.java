@@ -2,23 +2,20 @@ package test.blackbox.life.gennyproxy;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.jboss.resteasy.annotations.jaxrs.QueryParam;
 import org.json.JSONObject;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
-import java.io.IOException;
 import java.util.Optional;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @QuarkusTest
-public class GoogleApiEndpointsTest {
+public class UdemyApiEndpointsTest {
 
     private static String accessToken;
 
@@ -30,12 +27,6 @@ public class GoogleApiEndpointsTest {
 
     @ConfigProperty(name = "quarkus.oidc.credentials.secret")
     Optional<String> secret;
-
-    @ConfigProperty(name = "quarkus.access.username")
-    Optional<String> username;
-
-    @ConfigProperty(name = "quarkus.access.password")
-    Optional<String> password;
 
     static {
         RestAssured.useRelaxedHTTPSValidation();
@@ -49,8 +40,8 @@ public class GoogleApiEndpointsTest {
         String response =  given()
                 .log().all()
                 .param("grant_type", "password")
-                .param("username", username.get())
-                .param("password", password.get())
+                .param("username", "test1234@gmail.com")
+                .param("password", "alice")
                 .param("client_id", clientId.get())
                 .param("client_secret", secret.get())
                 .when()
@@ -69,56 +60,48 @@ public class GoogleApiEndpointsTest {
     }
 
     @Test
-    public void retrieveGoogleMapApi_passNoParameter_return200() {
-        //https://maps.googleapis.com/maps/api/js?key=XXXXX&libraries=places,drawing
-        given().auth().oauth2(accessToken)
+    public void retrieveCourseList_passValidParameter_return200() {
+         given().auth().oauth2(accessToken)
           .log().all()
           .when()
+                  .param("category","IT & Software")
+                  .param("subcategory","IT Certification")
+                 .param("ordering","highest-rated")
+                 .param("rating","3")
+              //   .param("page","1")
+                 .param("search","aws")
                 .port(8081)
-                .get("/googleapi/v1/map")
+                .get("/udemyapi/v1/course/list")
           .then()
                 .log().all()
              .statusCode(200)
-             .body(
-               containsString("google.maps.Load = function(apiLoad)")
-             );
+            .extract()
+                .body()
+                .asString();
+//             .body(
+//               containsString("google.maps.Load = function(apiLoad)")
+//             );
     }
 
     @Test
-    public void retrieveGoogleTimeZoneApi_passValidParameter_return200() {
-        //http://localhost:8081/googleapi/v1/timezone?location=-37.913151%2C145.262253&timestamp=1458000000
-        String response =  given().auth().oauth2(accessToken)
+    public void retrieveCourseDetail_passValidParameter_return200() {
+         String response =  given().auth().oauth2(accessToken)
                 .log().all()
                 .when() .port(8081)
-                .param("location", "-37.913151,145.262253")
-                .param("timestamp", 1458000000)
-                .get("/googleapi/v1/timezone")
+                .get("/udemyapi/v1/course/detail/1424118")
                 .then()
                 .log().all()
                 .statusCode(200)
-                .extract()
-                .body()
-                .asString();
-         assertEquals("Australia/Melbourne",response);
-
-
-    }
-
-    @Test
-    public void retrieveGoogleAddressApi_passValidParameter_return200() {
-         String response =  given()
-                .log().all().auth().oauth2(accessToken)
-                .when()
-                 .port(8081)
-                 .param("address", "14 Durham Place, Clayton South")
-                .get("/googleapi/v1/geocode")
-                .then()
-                .log().all()
-                .statusCode(200)
+                 .body(
+               containsString("1424118")
+             )
                 .extract()
                 .body()
                 .asString();
 
+
     }
+
+
 
 }
