@@ -68,7 +68,7 @@ public class UdemyApiEndpointsTest {
                   .param("subcategory","IT Certification")
                  .param("ordering","highest-rated")
                  .param("rating","3")
-              //   .param("page","1")
+                 .param("page","1")
                  .param("search","aws")
                 .port(8081)
                 .get("/udemyapi/v1/course/list")
