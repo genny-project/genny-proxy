@@ -24,9 +24,10 @@ public class ApiKeyEnvRetriever implements IApiKeyRetriever {
     private final static Function<String, String> readKeyFromFileSystem = fName -> {
         try {
             File file = new File(BASE_DIR + fName);
-            return FileUtils.readFileToString(file, Charset.defaultCharset());
-        } catch (IOException e) {
-            e.printStackTrace();
+            if (file.exists())
+                return FileUtils.readFileToString(file, Charset.defaultCharset());
+        } catch (IOException fne) {
+            fne.printStackTrace();
         }
 
         return StringUtil.EMPTY_STRING;

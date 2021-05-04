@@ -25,7 +25,7 @@ public class AbnLookupService {
 
   public AbnSearchResult retrieveCompanyAbn(String realm, String searchedName, int pageSize) throws UnsupportedEncodingException {
 
-    String abnKey = apiKeyRetriever.retrieveApiKey("ENV_ABN_SEARCH_APIKEY_" + realm, "ENV_ABN_SEARCH_APIKEY_DEFAULT");
+    String abnKey = apiKeyRetriever.retrieveApiKey("ENV_ABN_SEARCH_APIKEY_" + realm.toUpperCase(), "ENV_ABN_SEARCH_APIKEY_DEFAULT");
 
     String response =  abnLookupRepository.retrieveCompanyAbn(searchedName, pageSize, abnKey);
 
