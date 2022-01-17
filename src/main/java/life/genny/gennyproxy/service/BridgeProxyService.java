@@ -15,7 +15,7 @@ public class BridgeProxyService {
   @ConfigProperty(name = "quarkus.bridge.api.host")
   private String host;
 
-  @ConfigProperty(name = "quarkus.bridge.api..detail.path")
+  @ConfigProperty(name = "quarkus.bridge.api.detail.path")
   private String bridgeDetailPath;
 
   @ConfigProperty(name = "quarkus.bridge.api.port")
