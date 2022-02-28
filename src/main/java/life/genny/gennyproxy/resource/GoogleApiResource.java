@@ -32,6 +32,7 @@ public class GoogleApiResource {
 
     String respGoogleMapJs = googleApiService.retrieveGoogleMapApi(realm);
 
+    System.out.println("Endpoint v1/map return:" + respGoogleMapJs);
     return Response.ok(respGoogleMapJs, MediaType.TEXT_PLAIN).build();
   }
 
@@ -44,6 +45,8 @@ public class GoogleApiResource {
     String realm = accessTokenParser.validateRole("user", "superadmin");
 
     String timeZoneId = googleApiService.retrieveGoogleTimeZoneApi(realm, location, timestamp);
+
+    System.out.println("Endpoint v1/timezone return:" + timeZoneId);
 
     return Response.ok(timeZoneId, MediaType.TEXT_PLAIN).build();
   }
