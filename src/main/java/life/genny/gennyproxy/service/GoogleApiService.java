@@ -38,14 +38,15 @@ public class GoogleApiService {
 
     public String retrieveGoogleMapApi(String realm) {
 
-        String apiKey = apiKeyRetriever.retrieveApiKey("ENV_GOOGLE_MAPS_APIKEY_"+realm, "ENV_GOOGLE_MAPS_APIKEY_DEFAULT");
+        String apiKey = apiKeyRetriever.retrieveApiKey("ENV_GOOGLE_MAPS_APIKEY_"+realm, "ENV_GOOGLE_MAPS_APIKEY");
 
         return googleMapRepository.retrieveGoogleMap(apiKey);
     }
 
+    // timezone id value example Australia/Melbourne
     public String retrieveGoogleTimeZoneApi(String realm, String location, long timestamp) {
 
-        String apiKey = apiKeyRetriever.retrieveApiKey("ENV_GOOGLE_TIMEZONE_APIKEY_"+realm, "ENV_GOOGLE_TIMEZONE_APIKEY_DEFAULT");
+        String apiKey = apiKeyRetriever.retrieveApiKey("ENV_GOOGLE_TIMEZONE_APIKEY_"+realm, "ENV_GOOGLE_TIMEZONE_APIKEY");
 
         GoogleTimezone googleTimezone = timezoneRepository.retrieveGoogleMap(location, timestamp, apiKey);
 
@@ -54,7 +55,7 @@ public class GoogleApiService {
 
     public List<AddressResp> retrieveGoogleAddressApi(String realm, String address){
 
-        String apiKey = apiKeyRetriever.retrieveApiKey("ENV_GOOGLE_TIMEZONE_APIKEY_"+realm, "ENV_GOOGLE_TIMEZONE_APIKEY_DEFAULT");
+        String apiKey = apiKeyRetriever.retrieveApiKey("ENV_GOOGLE_TIMEZONE_APIKEY_"+realm, "ENV_GOOGLE_TIMEZONE_APIKEY");
 
         Addresses addresses = googleAddressRepository.retrieveGoogleMap(address, apiKey);
 
