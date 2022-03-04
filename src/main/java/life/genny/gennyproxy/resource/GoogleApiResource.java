@@ -27,12 +27,12 @@ public class GoogleApiResource {
   @Path("v1/map")
   @Produces(MediaType.APPLICATION_JSON)
   public Response retrieveGoogleMapApi() {
+    System.out.println("Call endpoint v1/map");
 
     String realm = accessTokenParser.validateRole("user", "superadmin");
 
     String respGoogleMapJs = googleApiService.retrieveGoogleMapApi(realm);
 
-    System.out.println("Endpoint v1/map return:" + respGoogleMapJs);
     return Response.ok(respGoogleMapJs, MediaType.TEXT_PLAIN).build();
   }
 
@@ -41,12 +41,11 @@ public class GoogleApiResource {
   @NoCache
   @Produces(MediaType.APPLICATION_JSON)
   public Response retrieveGoogleTimeZoneApi(@QueryParam("location") String location, @QueryParam("timestamp") long timestamp ) {
+    System.out.println("Call endpoint v1/timezone");
 
     String realm = accessTokenParser.validateRole("user", "superadmin");
 
     String timeZoneId = googleApiService.retrieveGoogleTimeZoneApi(realm, location, timestamp);
-
-    System.out.println("Endpoint v1/timezone return:" + timeZoneId);
 
     return Response.ok(timeZoneId, MediaType.TEXT_PLAIN).build();
   }
