@@ -39,6 +39,7 @@ public class GoogleApiService {
     public String retrieveGoogleMapApi(String realm) {
 
         String apiKey = apiKeyRetriever.retrieveApiKey("ENV_GOOGLE_MAPS_APIKEY_"+realm, "ENV_GOOGLE_MAPS_APIKEY");
+        System.out.println("ENV_GOOGLE_MAPS_APIKEY:" + apiKey);
 
         return googleMapRepository.retrieveGoogleMap(apiKey);
     }
@@ -47,6 +48,7 @@ public class GoogleApiService {
     public String retrieveGoogleTimeZoneApi(String realm, String location, long timestamp) {
 
         String apiKey = apiKeyRetriever.retrieveApiKey("ENV_GOOGLE_TIMEZONE_APIKEY_"+realm, "ENV_GOOGLE_TIMEZONE_APIKEY");
+        System.out.println("ENV_GOOGLE_TIMEZONE_APIKEY:" + apiKey);
 
         GoogleTimezone googleTimezone = timezoneRepository.retrieveGoogleMap(location, timestamp, apiKey);
 
