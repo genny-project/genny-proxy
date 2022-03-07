@@ -2,6 +2,7 @@ package life.genny.gennyproxy.resource;
 
 import life.genny.gennyproxy.application.AccessTokenParser;
 import life.genny.gennyproxy.model.address.AddressResp;
+import life.genny.gennyproxy.repository.entity.timezone.GoogleTimezone;
 import life.genny.gennyproxy.service.GoogleApiService;
 import org.jboss.resteasy.annotations.cache.NoCache;
 import org.jboss.resteasy.annotations.jaxrs.QueryParam;
@@ -27,6 +28,7 @@ public class GoogleApiResource {
   @Path("v1/map")
   @Produces(MediaType.APPLICATION_JSON)
   public Response retrieveGoogleMapApi() {
+    System.out.println("Call endpoint v1/map");
 
     String realm = accessTokenParser.validateRole("user", "superadmin");
 
@@ -40,12 +42,13 @@ public class GoogleApiResource {
   @NoCache
   @Produces(MediaType.APPLICATION_JSON)
   public Response retrieveGoogleTimeZoneApi(@QueryParam("location") String location, @QueryParam("timestamp") long timestamp ) {
+    System.out.println("Call endpoint v1/timezone");
 
     String realm = accessTokenParser.validateRole("user", "superadmin");
 
-    String timeZoneId = googleApiService.retrieveGoogleTimeZoneApi(realm, location, timestamp);
+    GoogleTimezone timeZone = googleApiService.retrieveGoogleTimeZoneApi(realm, location, timestamp);
 
-    return Response.ok(timeZoneId, MediaType.TEXT_PLAIN).build();
+    return Response.ok(timeZone, MediaType.APPLICATION_JSON).build();
   }
 
   @GET
