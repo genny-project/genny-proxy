@@ -4,6 +4,7 @@ import life.genny.gennyproxy.application.AccessTokenParser;
 import life.genny.gennyproxy.model.address.AddressResp;
 import life.genny.gennyproxy.repository.entity.timezone.GoogleTimezone;
 import life.genny.gennyproxy.service.GoogleApiService;
+import life.genny.qwandautils.JsonUtils;
 import org.jboss.resteasy.annotations.cache.NoCache;
 import org.jboss.resteasy.annotations.jaxrs.QueryParam;
 import life.genny.gennyproxy.repository.entity.address.Addresses;
@@ -50,6 +51,7 @@ public class GoogleApiResource {
     String realm = "";
 
     GoogleTimezone timeZone = googleApiService.retrieveGoogleTimeZoneApi(realm, location, timestamp);
+    System.out.println("RESPOSNE FROM GOOGLE API: "+ JsonUtils.toJson(timeZone));
 
     return Response.ok(timeZone, MediaType.APPLICATION_JSON).build();
   }
