@@ -1,6 +1,8 @@
 package life.genny.gennyproxy.repository.entity.timezone;
 
-public class GoogleTimezone {
+import java.io.Serializable;
+
+public class GoogleTimezone implements Serializable {
 
     private long dstOffset;
     private long rawOffset;
