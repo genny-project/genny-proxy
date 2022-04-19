@@ -34,6 +34,7 @@ public class GoogleApiResource {
     String realm = "";
 
     String respGoogleMapJs = googleApiService.retrieveGoogleMapApi(realm);
+    System.out.println("RESPOSNE FROM GOOGLE API: "+ respGoogleMapJs);
 
     return Response.ok(respGoogleMapJs, MediaType.TEXT_PLAIN).build();
   }
