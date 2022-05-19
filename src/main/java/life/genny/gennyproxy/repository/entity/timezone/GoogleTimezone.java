@@ -1,12 +1,15 @@
 package life.genny.gennyproxy.repository.entity.timezone;
 
-public class GoogleTimezone {
+import java.io.Serializable;
+
+public class GoogleTimezone implements Serializable {
 
     private long dstOffset;
     private long rawOffset;
     private String status;
     private String timeZoneId;
     private String timeZoneName;
+    private String errorMessage;
 
     public GoogleTimezone() {
     }
@@ -49,5 +52,18 @@ public class GoogleTimezone {
 
     public void setTimeZoneName(String timeZoneName) {
         this.timeZoneName = timeZoneName;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
+    public String toString() {
+        return String.format("dstOffset:%d, rawOffset:%d, status:%s, timeZoneId:%s, timeZoneName:%s, errorMessage:%s.",
+                            dstOffset, rawOffset, status,timeZoneId, timeZoneName, errorMessage) ;
     }
 }
