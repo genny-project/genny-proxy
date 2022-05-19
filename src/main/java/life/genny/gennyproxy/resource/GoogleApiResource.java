@@ -51,7 +51,7 @@ public class GoogleApiResource {
     String realm = "";
 
     GoogleTimezone timeZone = googleApiService.retrieveGoogleTimeZoneApi(realm, location, timestamp);
-    System.out.println("timezone: "+timeZone);
+    System.out.println("timezone: "+timeZone.toString());
     System.out.println("RESPOSNE FROM GOOGLE API: "+ timeZone.getTimeZoneId());
 
     return Response.ok(timeZone, MediaType.APPLICATION_JSON).build();

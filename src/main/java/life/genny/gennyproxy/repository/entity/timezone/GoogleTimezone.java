@@ -61,4 +61,9 @@ public class GoogleTimezone implements Serializable {
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
+
+    public String toString() {
+        return String.format("dstOffset:%d, rawOffset:%d, status:%s, timeZoneId:%s, timeZoneName:%s, errorMessage:%s.",
+                            dstOffset, rawOffset, status,timeZoneId, timeZoneName, errorMessage) ;
+    }
 }
